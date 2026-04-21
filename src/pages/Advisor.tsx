@@ -1,9 +1,9 @@
 import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Send, Sparkles, Bot, User, Loader2, Trash2 } from "lucide-react";
+import { Send, Sparkles, Bot, User, Loader2, Trash2, ArrowLeft } from "lucide-react";
 import ReactMarkdown from "react-markdown";
 import { toast } from "sonner";
-import PageShell from "@/components/PageShell";
+import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 
@@ -29,6 +29,7 @@ export default function Advisor() {
   });
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
   const scrollRef = useRef<HTMLDivElement>(null);
   const abortRef = useRef<AbortController | null>(null);
 
@@ -128,10 +129,17 @@ export default function Advisor() {
   };
 
   return (
-    <PageShell>
-      <div className="max-w-4xl mx-auto px-4 py-6 flex flex-col h-[calc(100vh-80px)]">
+    <div className="min-h-screen relative">
+      <div className="fixed inset-0 -z-10 bg-background">
+        <div className="absolute top-0 left-1/4 w-[500px] h-[500px] rounded-full bg-primary/20 blur-3xl" />
+        <div className="absolute bottom-0 right-1/4 w-[500px] h-[500px] rounded-full bg-secondary/20 blur-3xl" />
+      </div>
+      <div className="max-w-4xl mx-auto px-4 py-6 flex flex-col h-screen">
         <div className="flex items-center justify-between mb-4">
           <div className="flex items-center gap-3">
+            <Button variant="ghost" size="icon" onClick={() => navigate(-1)} aria-label="Back">
+              <ArrowLeft className="w-5 h-5" />
+            </Button>
             <div className="w-11 h-11 rounded-2xl bg-gradient-to-br from-emerald-400 to-green-600 flex items-center justify-center shadow-lg">
               <Sparkles className="w-6 h-6 text-white" />
             </div>
