@@ -5,9 +5,9 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
-import { toast } from "sonner";
 import { useNavigate } from "react-router-dom";
 import PageShell from "@/components/PageShell";
+import CheckoutDialog from "@/components/CheckoutDialog";
 
 type Row = {
   id: string; quantity: number;
@@ -19,6 +19,7 @@ export default function Cart() {
   const navigate = useNavigate();
   const [rows, setRows] = useState<Row[]>([]);
   const [loading, setLoading] = useState(true);
+  const [checkoutOpen, setCheckoutOpen] = useState(false);
 
   const load = async () => {
     if (!user) return;
@@ -104,7 +105,7 @@ export default function Cart() {
               </div>
               <Button
                 className="glow-btn text-primary-foreground"
-                onClick={() => toast.success("Order placed! We'll contact you shortly.")}
+                onClick={() => setCheckoutOpen(true)}
               >
                 Checkout
               </Button>
@@ -112,6 +113,13 @@ export default function Cart() {
           </Card>
         </div>
       )}
+      <CheckoutDialog
+        open={checkoutOpen}
+        onOpenChange={setCheckoutOpen}
+        lines={rows as any}
+        total={total}
+        onPlaced={() => { load(); navigate("/orders"); }}
+      />
     </PageShell>
   );
 }

@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Camera, ShoppingBag, Users, ShoppingCart, Store, Sparkles } from "lucide-react";
+import { Camera, ShoppingBag, Users, ShoppingCart, Store, Sparkles, Package } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
@@ -13,6 +13,7 @@ export default function QuickActions() {
     { label: t("actions.community"), icon: Users, color: "from-sky-400 to-blue-600", path: "/community" },
     { label: t("actions.shops"), icon: Store, color: "from-violet-400 to-purple-600", path: "/shops" },
     { label: t("actions.cart"), icon: ShoppingCart, color: "from-amber-400 to-orange-600", path: "/cart" },
+    { label: t("actions.orders", "Orders"), icon: Package, color: "from-fuchsia-400 to-pink-600", path: "/orders" },
   ];
   return (
     <motion.div

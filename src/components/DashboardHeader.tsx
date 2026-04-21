@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { useTranslation } from "react-i18next";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
+import NotificationBell from "@/components/NotificationBell";
 
 export default function DashboardHeader() {
   const { user, signOut } = useAuth();
@@ -48,6 +49,7 @@ export default function DashboardHeader() {
       </Link>
       <div className="flex items-center gap-1">
         <LanguageSwitcher />
+        <NotificationBell />
         {isAdmin && (
           <Button variant="ghost" size="icon" onClick={() => navigate("/admin")} aria-label={t("header.admin")}>
             <Shield className="w-5 h-5 text-primary" />
