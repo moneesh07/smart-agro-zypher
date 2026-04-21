@@ -10,6 +10,7 @@ import Dashboard from "./pages/Dashboard.tsx";
 import Diagnose from "./pages/Diagnose.tsx";
 import Marketplace from "./pages/Marketplace.tsx";
 import Cart from "./pages/Cart.tsx";
+import Orders from "./pages/Orders.tsx";
 import Shops from "./pages/Shops.tsx";
 import Community from "./pages/Community.tsx";
 import Profile from "./pages/Profile.tsx";
@@ -37,6 +38,7 @@ const AppRoutes = () => {
         <Route path="/diagnose" element={<ProtectedRoute><Diagnose /></ProtectedRoute>} />
         <Route path="/marketplace" element={<ProtectedRoute><Marketplace /></ProtectedRoute>} />
         <Route path="/cart" element={<ProtectedRoute><Cart /></ProtectedRoute>} />
+        <Route path="/orders" element={<ProtectedRoute><Orders /></ProtectedRoute>} />
         <Route path="/shops" element={<ProtectedRoute><Shops /></ProtectedRoute>} />
         <Route path="/community" element={<ProtectedRoute><Community /></ProtectedRoute>} />
         <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
