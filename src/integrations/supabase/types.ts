@@ -14,7 +14,72 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      fertilizer_logs: {
+        Row: {
+          created_at: string
+          crop: string
+          id: string
+          land_area: number
+          nitrogen: number
+          phosphorus: number
+          potassium: number
+          soil_type: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          crop: string
+          id?: string
+          land_area: number
+          nitrogen: number
+          phosphorus: number
+          potassium: number
+          soil_type: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          crop?: string
+          id?: string
+          land_area?: number
+          nitrogen?: number
+          phosphorus?: number
+          potassium?: number
+          soil_type?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      profiles: {
+        Row: {
+          created_at: string
+          farm_name: string | null
+          full_name: string | null
+          id: string
+          location: string | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          farm_name?: string | null
+          full_name?: string | null
+          id?: string
+          location?: string | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          farm_name?: string | null
+          full_name?: string | null
+          id?: string
+          location?: string | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
