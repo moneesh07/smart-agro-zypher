@@ -14,6 +14,7 @@ import Shops from "./pages/Shops.tsx";
 import Community from "./pages/Community.tsx";
 import Profile from "./pages/Profile.tsx";
 import Advisor from "./pages/Advisor.tsx";
+import Admin from "./pages/Admin.tsx";
 import NotFound from "./pages/NotFound.tsx";
 import VoiceAssistant from "@/components/VoiceAssistant";
 
@@ -40,6 +41,7 @@ const AppRoutes = () => {
         <Route path="/community" element={<ProtectedRoute><Community /></ProtectedRoute>} />
         <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
         <Route path="/advisor" element={<ProtectedRoute><Advisor /></ProtectedRoute>} />
+        <Route path="/admin" element={<ProtectedRoute><Admin /></ProtectedRoute>} />
         <Route path="*" element={<NotFound />} />
       </Routes>
       {user && <VoiceAssistant />}
