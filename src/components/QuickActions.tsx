@@ -1,18 +1,19 @@
 import { motion } from "framer-motion";
 import { Camera, ShoppingBag, Users, ShoppingCart, Store, Sparkles } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-
-const actions = [
-  { label: "AI Advisor", icon: Sparkles, color: "from-teal-400 to-emerald-600", path: "/advisor" },
-  { label: "Diagnose", icon: Camera, color: "from-rose-400 to-pink-600", path: "/diagnose" },
-  { label: "Marketplace", icon: ShoppingBag, color: "from-emerald-400 to-green-600", path: "/marketplace" },
-  { label: "Community", icon: Users, color: "from-sky-400 to-blue-600", path: "/community" },
-  { label: "Shops", icon: Store, color: "from-violet-400 to-purple-600", path: "/shops" },
-  { label: "Cart", icon: ShoppingCart, color: "from-amber-400 to-orange-600", path: "/cart" },
-];
+import { useTranslation } from "react-i18next";
 
 export default function QuickActions() {
   const navigate = useNavigate();
+  const { t } = useTranslation();
+  const actions = [
+    { label: t("actions.aiAdvisor"), icon: Sparkles, color: "from-teal-400 to-emerald-600", path: "/advisor" },
+    { label: t("actions.diagnose"), icon: Camera, color: "from-rose-400 to-pink-600", path: "/diagnose" },
+    { label: t("actions.marketplace"), icon: ShoppingBag, color: "from-emerald-400 to-green-600", path: "/marketplace" },
+    { label: t("actions.community"), icon: Users, color: "from-sky-400 to-blue-600", path: "/community" },
+    { label: t("actions.shops"), icon: Store, color: "from-violet-400 to-purple-600", path: "/shops" },
+    { label: t("actions.cart"), icon: ShoppingCart, color: "from-amber-400 to-orange-600", path: "/cart" },
+  ];
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}

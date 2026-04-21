@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { Sun, Cloud, Snowflake, Droplets } from "lucide-react";
 import { useMemo } from "react";
+import { useTranslation } from "react-i18next";
 
 function getSeason() {
   const m = new Date().getMonth() + 1;
@@ -40,6 +41,7 @@ export default function SeasonalRecommendation() {
   const season = useMemo(getSeason, []);
   const info = DATA[season];
   const Icon = info.icon;
+  const { t } = useTranslation();
 
   return (
     <motion.div
@@ -53,8 +55,8 @@ export default function SeasonalRecommendation() {
           <Icon className="w-6 h-6 text-white" />
         </div>
         <div>
-          <h2 className="text-xl font-bold capitalize">{season} crops</h2>
-          <p className="text-sm text-muted-foreground">Best picks for right now</p>
+          <h2 className="text-xl font-bold">{t(`season.${season}`)}</h2>
+          <p className="text-sm text-muted-foreground">{t("season.subtitle")}</p>
         </div>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
@@ -68,9 +70,9 @@ export default function SeasonalRecommendation() {
             className="rounded-2xl p-4 bg-card border border-border hover:border-primary/40 transition-all"
           >
             <h3 className="font-bold text-lg">{c.name}</h3>
-            <p className="text-sm text-muted-foreground mt-1">Yield: {c.yield}</p>
+            <p className="text-sm text-muted-foreground mt-1">{t("season.yield")} {c.yield}</p>
             <div className="flex items-center gap-1 mt-2 text-xs text-secondary">
-              <Droplets className="w-3 h-3" /> {c.water} water
+              <Droplets className="w-3 h-3" /> {c.water} {t("season.water")}
             </div>
           </motion.div>
         ))}

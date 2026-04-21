@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { Sun, Cloud, CloudRain, CloudSnow, CloudLightning, Wind, Droplets, MapPin, Loader2 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
+import { useTranslation } from "react-i18next";
 
 // WMO weather codes → icon + label
 const codeMap: Record<number, { icon: any; label: string }> = {
@@ -27,6 +28,7 @@ type WeatherData = {
 export default function WeatherWidget() {
   const [data, setData] = useState<WeatherData | null>(null);
   const [loading, setLoading] = useState(true);
+  const { t } = useTranslation();
 
   useEffect(() => {
     const fetchWeather = async (lat?: number, lon?: number) => {
@@ -70,9 +72,9 @@ export default function WeatherWidget() {
       <div className="relative z-10">
         <div className="flex items-start justify-between mb-4">
           <div className="min-w-0">
-            <h2 className="text-xl font-bold">Weather</h2>
+            <h2 className="text-xl font-bold">{t("weather.title")}</h2>
             <p className="text-sm text-muted-foreground flex items-center gap-1 truncate">
-              <MapPin className="w-3 h-3 shrink-0" />{data?.location ?? "Locating…"}
+              <MapPin className="w-3 h-3 shrink-0" />{data?.location ?? t("weather.locating")}
             </p>
           </div>
           <motion.div animate={{ rotate: [0, 8, -8, 0] }} transition={{ duration: 4, repeat: Infinity }}>
@@ -82,7 +84,7 @@ export default function WeatherWidget() {
 
         {loading ? (
           <div className="flex items-center gap-2 text-muted-foreground py-4">
-            <Loader2 className="w-4 h-4 animate-spin" /> Loading live weather…
+            <Loader2 className="w-4 h-4 animate-spin" /> {t("weather.loading")}
           </div>
         ) : current ? (
           <>
@@ -105,14 +107,14 @@ export default function WeatherWidget() {
                 className="mb-4 p-3 rounded-xl bg-secondary/15 border border-secondary/30 text-xs text-foreground flex gap-2"
               >
                 <CloudRain className="w-4 h-4 text-secondary shrink-0" />
-                <span>Rain alert — delay fertilizer application and pesticide spraying.</span>
+                <span>{t("weather.rainAlert")}</span>
               </motion.div>
             )}
 
             <div className="grid grid-cols-4 gap-2">
               {daily?.time.slice(0, 4).map((t, i) => {
                 const Ic = codeInfo(daily.weather_code[i]).icon;
-                const day = i === 0 ? "Today" : new Date(t).toLocaleDateString(undefined, { weekday: "short" });
+                const day = i === 0 ? t("weather.today") : new Date(t).toLocaleDateString(undefined, { weekday: "short" });
                 return (
                   <div key={t} className="rounded-xl p-3 bg-card/60 border border-border text-center">
                     <div className="text-xs text-muted-foreground">{day}</div>
@@ -125,7 +127,7 @@ export default function WeatherWidget() {
             </div>
           </>
         ) : (
-          <p className="text-sm text-muted-foreground">Weather unavailable.</p>
+          <p className="text-sm text-muted-foreground">{t("weather.unavailable")}</p>
         )}
       </div>
     </motion.div>
