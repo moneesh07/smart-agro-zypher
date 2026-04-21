@@ -8,6 +8,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
 import { toast } from "sonner";
+import { useTranslation } from "react-i18next";
 
 const RATES: Record<string, { n: number; p: number; k: number }> = {
   Rice: { n: 120, p: 60, k: 40 },
@@ -31,6 +32,7 @@ function AnimatedNumber({ value }: { value: number }) {
 
 export default function FertilizerCalculator() {
   const { user } = useAuth();
+  const { t } = useTranslation();
   const [area, setArea] = useState("1");
   const [crop, setCrop] = useState("Rice");
   const [soil, setSoil] = useState("Loamy");
@@ -39,7 +41,7 @@ export default function FertilizerCalculator() {
 
   const calculate = async () => {
     const a = parseFloat(area);
-    if (!a || a <= 0 || a > 10000) { toast.error("Enter a valid land area (0–10000 acres)"); return; }
+    if (!a || a <= 0 || a > 10000) { toast.error(t("calculator.invalidArea")); return; }
     const r = RATES[crop];
     const n = r.n * a, p = r.p * a, k = r.k * a;
     setLoading(true);
@@ -53,7 +55,7 @@ export default function FertilizerCalculator() {
         nitrogen: n, phosphorus: p, potassium: k,
       });
     }
-    toast.success("Calculation saved to your history");
+    toast.success(t("calculator.saved"));
   };
 
   return (
@@ -69,18 +71,18 @@ export default function FertilizerCalculator() {
             <Sprout className="w-6 h-6 text-primary-foreground" />
           </div>
           <div>
-            <h2 className="text-2xl font-bold">Fertilizer Calculator</h2>
-            <p className="text-sm text-muted-foreground">Precise N-P-K for your crop</p>
+            <h2 className="text-2xl font-bold">{t("calculator.title")}</h2>
+            <p className="text-sm text-muted-foreground">{t("calculator.subtitle")}</p>
           </div>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
           <div>
-            <Label>Land area (acres)</Label>
+            <Label>{t("calculator.land")}</Label>
             <Input type="number" min="0" max="10000" step="0.1" value={area} onChange={(e) => setArea(e.target.value)} className="mt-1" />
           </div>
           <div>
-            <Label>Crop type</Label>
+            <Label>{t("calculator.crop")}</Label>
             <Select value={crop} onValueChange={setCrop}>
               <SelectTrigger className="mt-1"><SelectValue /></SelectTrigger>
               <SelectContent>
@@ -91,7 +93,7 @@ export default function FertilizerCalculator() {
             </Select>
           </div>
           <div>
-            <Label>Soil type</Label>
+            <Label>{t("calculator.soil")}</Label>
             <Select value={soil} onValueChange={setSoil}>
               <SelectTrigger className="mt-1"><SelectValue /></SelectTrigger>
               <SelectContent>
@@ -106,7 +108,7 @@ export default function FertilizerCalculator() {
 
         <Button onClick={calculate} disabled={loading} className="glow-btn text-primary-foreground border-0 h-12 px-8 font-semibold">
           {loading ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : <Sparkles className="w-4 h-4 mr-2" />}
-          Calculate
+          {t("calculator.calculate")}
         </Button>
 
         <AnimatePresence>
@@ -118,10 +120,10 @@ export default function FertilizerCalculator() {
               className="mt-6 grid grid-cols-2 md:grid-cols-4 gap-3"
             >
               {[
-                { label: "Nitrogen", v: result.n, color: "from-emerald-400 to-green-500" },
-                { label: "Phosphorus", v: result.p, color: "from-sky-400 to-blue-500" },
-                { label: "Potassium", v: result.k, color: "from-amber-400 to-orange-500" },
-                { label: "Total (kg)", v: result.total, color: "from-fuchsia-400 to-pink-500" },
+                { label: t("calculator.nitrogen"), v: result.n, color: "from-emerald-400 to-green-500" },
+                { label: t("calculator.phosphorus"), v: result.p, color: "from-sky-400 to-blue-500" },
+                { label: t("calculator.potassium"), v: result.k, color: "from-amber-400 to-orange-500" },
+                { label: t("calculator.total"), v: result.total, color: "from-fuchsia-400 to-pink-500" },
               ].map((x) => (
                 <div key={x.label} className={`rounded-2xl p-4 bg-gradient-to-br ${x.color} text-white shadow-lg`}>
                   <div className="text-xs font-medium opacity-90">{x.label}</div>
@@ -130,7 +132,7 @@ export default function FertilizerCalculator() {
                 </div>
               ))}
               <div className="col-span-2 md:col-span-4 rounded-2xl p-4 bg-primary/10 border border-primary/20">
-                <p className="text-sm"><strong>Recommendation:</strong> Apply in 3 stages — basal (40%), tillering (30%), flowering (30%).</p>
+                <p className="text-sm"><strong>{t("calculator.recommendation")}</strong> {t("calculator.stages")}</p>
               </div>
             </motion.div>
           )}

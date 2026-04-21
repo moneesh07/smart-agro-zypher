@@ -1,0 +1,72 @@
+{
+  "common": {
+    "loading": "Loading…",
+    "save": "Save",
+    "cancel": "Cancel",
+    "signOut": "Sign out",
+    "language": "Language"
+  },
+  "header": {
+    "welcome": "Welcome back",
+    "defaultName": "Farmer",
+    "cart": "Cart",
+    "profile": "Profile",
+    "admin": "Admin"
+  },
+  "actions": {
+    "aiAdvisor": "AI Advisor",
+    "diagnose": "Diagnose",
+    "marketplace": "Marketplace",
+    "community": "Community",
+    "shops": "Shops",
+    "cart": "Cart"
+  },
+  "calculator": {
+    "title": "Fertilizer Calculator",
+    "subtitle": "Precise N-P-K for your crop",
+    "land": "Land area (acres)",
+    "crop": "Crop type",
+    "soil": "Soil type",
+    "calculate": "Calculate",
+    "nitrogen": "Nitrogen",
+    "phosphorus": "Phosphorus",
+    "potassium": "Potassium",
+    "total": "Total (kg)",
+    "recommendation": "Recommendation:",
+    "stages": "Apply in 3 stages — basal (40%), tillering (30%), flowering (30%).",
+    "saved": "Calculation saved to your history",
+    "invalidArea": "Enter a valid land area (0–10000 acres)"
+  },
+  "weather": {
+    "title": "Weather",
+    "locating": "Locating…",
+    "loading": "Loading live weather…",
+    "today": "Today",
+    "rainAlert": "Rain alert — delay fertilizer application and pesticide spraying.",
+    "unavailable": "Weather unavailable."
+  },
+  "season": {
+    "summer": "Summer crops",
+    "monsoon": "Monsoon crops",
+    "winter": "Winter crops",
+    "subtitle": "Best picks for right now",
+    "yield": "Yield:",
+    "water": "water"
+  },
+  "auth": {
+    "brand": "SmartAgro",
+    "tagline": "Intelligent Agriculture",
+    "welcomeBack": "Welcome back",
+    "startGrowing": "Start growing smarter",
+    "signinSub": "Sign in to your farm dashboard",
+    "signupSub": "Create your SmartAgro account",
+    "fullName": "Full name",
+    "email": "Email",
+    "password": "Password",
+    "signIn": "Sign in",
+    "createAccount": "Create account",
+    "newHere": "New here?",
+    "haveAccount": "Already have an account?",
+    "signUp": "Sign up"
+  }
+}
