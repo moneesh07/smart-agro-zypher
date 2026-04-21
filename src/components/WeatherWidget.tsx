@@ -112,11 +112,11 @@ export default function WeatherWidget() {
             )}
 
             <div className="grid grid-cols-4 gap-2">
-              {daily?.time.slice(0, 4).map((t, i) => {
+              {daily?.time.slice(0, 4).map((time, i) => {
                 const Ic = codeInfo(daily.weather_code[i]).icon;
-                const day = i === 0 ? t("weather.today") : new Date(t).toLocaleDateString(undefined, { weekday: "short" });
+                const day = i === 0 ? t("weather.today") : new Date(time).toLocaleDateString(undefined, { weekday: "short" });
                 return (
-                  <div key={t} className="rounded-xl p-3 bg-card/60 border border-border text-center">
+                  <div key={time} className="rounded-xl p-3 bg-card/60 border border-border text-center">
                     <div className="text-xs text-muted-foreground">{day}</div>
                     <Ic className="w-6 h-6 mx-auto my-2 text-primary" />
                     <div className="text-sm font-semibold">{Math.round(daily.temperature_2m_max[i])}°</div>
