@@ -258,6 +258,6 @@ export default function Advisor() {
           </Button>
         </form>
       </div>
-    </PageShell>
+    </div>
   );
 }
