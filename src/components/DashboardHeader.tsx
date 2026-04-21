@@ -1,13 +1,15 @@
 import { motion } from "framer-motion";
-import { Leaf, LogOut, ShoppingCart, User } from "lucide-react";
+import { Leaf, LogOut, ShoppingCart, User, Shield } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/hooks/useAuth";
+import { useUserRole } from "@/hooks/useUserRole";
 import { useNavigate, Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 
 export default function DashboardHeader() {
   const { user, signOut } = useAuth();
+  const { isAdmin } = useUserRole();
   const navigate = useNavigate();
   const [cartCount, setCartCount] = useState(0);
   const name = user?.user_metadata?.full_name || user?.email?.split("@")[0] || "Farmer";
@@ -42,6 +44,11 @@ export default function DashboardHeader() {
         </div>
       </Link>
       <div className="flex items-center gap-1">
+        {isAdmin && (
+          <Button variant="ghost" size="icon" onClick={() => navigate("/admin")} aria-label="Admin">
+            <Shield className="w-5 h-5 text-primary" />
+          </Button>
+        )}
         <Button variant="ghost" size="icon" onClick={() => navigate("/cart")} aria-label="Cart" className="relative">
           <ShoppingCart className="w-5 h-5" />
           {cartCount > 0 && (
