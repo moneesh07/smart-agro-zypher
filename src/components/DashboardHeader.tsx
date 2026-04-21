@@ -1,11 +1,30 @@
 import { motion } from "framer-motion";
-import { Leaf, LogOut } from "lucide-react";
+import { Leaf, LogOut, ShoppingCart, User } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/hooks/useAuth";
+import { useNavigate, Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { supabase } from "@/integrations/supabase/client";
 
 export default function DashboardHeader() {
   const { user, signOut } = useAuth();
+  const navigate = useNavigate();
+  const [cartCount, setCartCount] = useState(0);
   const name = user?.user_metadata?.full_name || user?.email?.split("@")[0] || "Farmer";
+
+  useEffect(() => {
+    if (!user) return;
+    const load = async () => {
+      const { data } = await supabase.from("cart_items").select("quantity").eq("user_id", user.id);
+      setCartCount((data ?? []).reduce((s, i) => s + (i.quantity ?? 0), 0));
+    };
+    load();
+    const ch = supabase
+      .channel("cart-badge")
+      .on("postgres_changes", { event: "*", schema: "public", table: "cart_items", filter: `user_id=eq.${user.id}` }, load)
+      .subscribe();
+    return () => { supabase.removeChannel(ch); };
+  }, [user]);
 
   return (
     <motion.header
@@ -13,7 +32,7 @@ export default function DashboardHeader() {
       animate={{ opacity: 1, y: 0 }}
       className="flex items-center justify-between mb-8"
     >
-      <div className="flex items-center gap-3">
+      <Link to="/dashboard" className="flex items-center gap-3">
         <div className="w-11 h-11 rounded-2xl glow-btn flex items-center justify-center">
           <Leaf className="w-5 h-5 text-primary-foreground" />
         </div>
@@ -21,10 +40,23 @@ export default function DashboardHeader() {
           <p className="text-xs text-muted-foreground">Welcome back</p>
           <h1 className="font-bold text-lg">{name} 🌾</h1>
         </div>
+      </Link>
+      <div className="flex items-center gap-1">
+        <Button variant="ghost" size="icon" onClick={() => navigate("/cart")} aria-label="Cart" className="relative">
+          <ShoppingCart className="w-5 h-5" />
+          {cartCount > 0 && (
+            <span className="absolute -top-1 -right-1 w-5 h-5 rounded-full bg-primary text-primary-foreground text-[10px] font-bold flex items-center justify-center">
+              {cartCount}
+            </span>
+          )}
+        </Button>
+        <Button variant="ghost" size="icon" onClick={() => navigate("/profile")} aria-label="Profile">
+          <User className="w-5 h-5" />
+        </Button>
+        <Button variant="ghost" size="sm" onClick={signOut}>
+          <LogOut className="w-4 h-4 mr-2" /> Sign out
+        </Button>
       </div>
-      <Button variant="ghost" size="sm" onClick={signOut}>
-        <LogOut className="w-4 h-4 mr-2" /> Sign out
-      </Button>
     </motion.header>
   );
 }

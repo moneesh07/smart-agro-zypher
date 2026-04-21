@@ -39,15 +39,19 @@ export default function VoiceAssistant() {
       const [n,p,k] = RATES[crop];
       r = `For ${crop} on ${a} acres: ${n*a} kg nitrogen, ${p*a} kg phosphorus, ${k*a} kg potassium. Total ${ (n+p+k)*a } kilograms.`;
     } else if (t.includes("recommend") && t.includes("crop")) {
-      r = "Showing seasonal crop recommendations on your dashboard.";
+      navigate("/dashboard"); r = "Showing seasonal crop recommendations on your dashboard.";
     } else if (t.includes("marketplace")) {
-      r = "Marketplace opens in the next phase. Stay tuned!";
+      navigate("/marketplace"); r = "Opening the marketplace.";
     } else if (t.includes("cart")) {
-      r = "Your cart is currently empty.";
-    } else if (t.includes("disease") || t.includes("camera") || t.includes("detect")) {
-      r = "Disease detection launches in Phase 2.";
+      navigate("/cart"); r = "Opening your cart.";
+    } else if (t.includes("disease") || t.includes("camera") || t.includes("detect") || t.includes("diagnose")) {
+      navigate("/diagnose"); r = "Opening disease detection. Point your camera at the crop.";
     } else if (t.includes("shop")) {
-      r = "Nearby agri shops will appear soon.";
+      navigate("/shops"); r = "Showing nearby agri shops.";
+    } else if (t.includes("community") || t.includes("expert")) {
+      navigate("/community"); r = "Opening community and experts.";
+    } else if (t.includes("profile")) {
+      navigate("/profile"); r = "Opening your profile.";
     } else if (t.includes("dashboard") || t.includes("home")) {
       navigate("/dashboard"); r = "Opening the dashboard.";
     } else {

@@ -14,6 +14,107 @@ export type Database = {
   }
   public: {
     Tables: {
+      cart_items: {
+        Row: {
+          created_at: string
+          id: string
+          item_id: string
+          quantity: number
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          item_id: string
+          quantity?: number
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          item_id?: string
+          quantity?: number
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "cart_items_item_id_fkey"
+            columns: ["item_id"]
+            isOneToOne: false
+            referencedRelation: "marketplace_items"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      disease_detections: {
+        Row: {
+          confidence: number
+          created_at: string
+          crop: string | null
+          disease_name: string
+          id: string
+          image_url: string | null
+          treatment: string | null
+          user_id: string
+        }
+        Insert: {
+          confidence?: number
+          created_at?: string
+          crop?: string | null
+          disease_name: string
+          id?: string
+          image_url?: string | null
+          treatment?: string | null
+          user_id: string
+        }
+        Update: {
+          confidence?: number
+          created_at?: string
+          crop?: string | null
+          disease_name?: string
+          id?: string
+          image_url?: string | null
+          treatment?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
+      experts: {
+        Row: {
+          avatar_url: string | null
+          created_at: string
+          experience_years: number
+          id: string
+          location: string | null
+          name: string
+          phone: string | null
+          rating: number
+          specialization: string
+        }
+        Insert: {
+          avatar_url?: string | null
+          created_at?: string
+          experience_years?: number
+          id?: string
+          location?: string | null
+          name: string
+          phone?: string | null
+          rating?: number
+          specialization: string
+        }
+        Update: {
+          avatar_url?: string | null
+          created_at?: string
+          experience_years?: number
+          id?: string
+          location?: string | null
+          name?: string
+          phone?: string | null
+          rating?: number
+          specialization?: string
+        }
+        Relationships: []
+      }
       fertilizer_logs: {
         Row: {
           created_at: string
@@ -50,6 +151,48 @@ export type Database = {
         }
         Relationships: []
       }
+      marketplace_items: {
+        Row: {
+          category: string
+          created_at: string
+          description: string | null
+          id: string
+          image_url: string | null
+          name: string
+          phone: string | null
+          price: number
+          seller: string | null
+          stock: number
+          unit: string
+        }
+        Insert: {
+          category: string
+          created_at?: string
+          description?: string | null
+          id?: string
+          image_url?: string | null
+          name: string
+          phone?: string | null
+          price: number
+          seller?: string | null
+          stock?: number
+          unit?: string
+        }
+        Update: {
+          category?: string
+          created_at?: string
+          description?: string | null
+          id?: string
+          image_url?: string | null
+          name?: string
+          phone?: string | null
+          price?: number
+          seller?: string | null
+          stock?: number
+          unit?: string
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           created_at: string
@@ -77,6 +220,39 @@ export type Database = {
           location?: string | null
           updated_at?: string
           user_id?: string
+        }
+        Relationships: []
+      }
+      shops: {
+        Row: {
+          address: string
+          created_at: string
+          distance_km: number
+          id: string
+          latitude: number | null
+          longitude: number | null
+          name: string
+          phone: string | null
+        }
+        Insert: {
+          address: string
+          created_at?: string
+          distance_km?: number
+          id?: string
+          latitude?: number | null
+          longitude?: number | null
+          name: string
+          phone?: string | null
+        }
+        Update: {
+          address?: string
+          created_at?: string
+          distance_km?: number
+          id?: string
+          latitude?: number | null
+          longitude?: number | null
+          name?: string
+          phone?: string | null
         }
         Relationships: []
       }
