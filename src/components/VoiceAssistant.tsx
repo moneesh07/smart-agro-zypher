@@ -52,6 +52,8 @@ export default function VoiceAssistant() {
       navigate("/community"); r = "Opening community and experts.";
     } else if (t.includes("profile")) {
       navigate("/profile"); r = "Opening your profile.";
+    } else if (t.includes("advisor") || t.includes("chat") || t.includes("ask ai")) {
+      navigate("/advisor"); r = "Opening the AI crop advisor.";
     } else if (t.includes("dashboard") || t.includes("home")) {
       navigate("/dashboard"); r = "Opening the dashboard.";
     } else {

@@ -1,8 +1,9 @@
 import { motion } from "framer-motion";
-import { Camera, ShoppingBag, Users, ShoppingCart, Store } from "lucide-react";
+import { Camera, ShoppingBag, Users, ShoppingCart, Store, Sparkles } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 const actions = [
+  { label: "AI Advisor", icon: Sparkles, color: "from-teal-400 to-emerald-600", path: "/advisor" },
   { label: "Diagnose", icon: Camera, color: "from-rose-400 to-pink-600", path: "/diagnose" },
   { label: "Marketplace", icon: ShoppingBag, color: "from-emerald-400 to-green-600", path: "/marketplace" },
   { label: "Community", icon: Users, color: "from-sky-400 to-blue-600", path: "/community" },
@@ -17,7 +18,7 @@ export default function QuickActions() {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6, delay: 0.3 }}
-      className="grid grid-cols-2 md:grid-cols-5 gap-3"
+      className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3"
     >
       {actions.map((a) => {
         const Icon = a.icon;
