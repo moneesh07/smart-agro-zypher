@@ -4,7 +4,12 @@
     "save": "Save",
     "cancel": "Cancel",
     "signOut": "Sign out",
-    "language": "Language"
+    "language": "Language",
+    "back": "Back",
+    "delete": "Delete",
+    "send": "Send",
+    "call": "Call",
+    "message": "Message"
   },
   "header": {
     "welcome": "Welcome back",
@@ -19,7 +24,8 @@
     "marketplace": "Marketplace",
     "community": "Community",
     "shops": "Shops",
-    "cart": "Cart"
+    "cart": "Cart",
+    "orders": "Orders"
   },
   "calculator": {
     "title": "Fertilizer Calculator",
@@ -68,5 +74,115 @@
     "newHere": "New here?",
     "haveAccount": "Already have an account?",
     "signUp": "Sign up"
+  },
+  "marketplace": {
+    "title": "Marketplace",
+    "subtitle": "Seeds, fertilizers & tools",
+    "all": "All",
+    "seeds": "Seeds",
+    "fertilizers": "Fertilizers",
+    "tools": "Tools",
+    "loadingProducts": "Loading products…",
+    "add": "Add",
+    "addedToCart": "{{name}} added to cart"
+  },
+  "cart": {
+    "title": "Your Cart",
+    "items_one": "{{count}} item",
+    "items_other": "{{count}} items",
+    "empty": "Your cart is empty",
+    "browse": "Browse Marketplace",
+    "total": "Total",
+    "checkout": "Checkout"
+  },
+  "orders": {
+    "title": "Your Orders",
+    "count_one": "{{count}} order",
+    "count_other": "{{count}} orders",
+    "empty": "You haven't placed any orders yet",
+    "browse": "Browse Marketplace",
+    "cancel": "Cancel",
+    "cancelled": "Order cancelled",
+    "cancelFailed": "Couldn't cancel order",
+    "order": "Order",
+    "status": {
+      "pending": "Pending",
+      "confirmed": "Confirmed",
+      "shipped": "Shipped",
+      "delivered": "Delivered",
+      "cancelled": "Cancelled"
+    }
+  },
+  "diagnose": {
+    "title": "Disease Detection",
+    "subtitle": "Capture or upload a crop photo for AI diagnosis",
+    "noImage": "No image yet. Open camera or upload.",
+    "analyzing": "Analyzing with AI…",
+    "openCamera": "Open Camera",
+    "upload": "Upload",
+    "diagnoseBtn": "Diagnose",
+    "retake": "Retake",
+    "diagnosis": "Diagnosis",
+    "crop": "Crop",
+    "confidence": "Confidence",
+    "treatment": "Treatment",
+    "cameraError": "Could not access camera. Try uploading an image instead.",
+    "failed": "Diagnosis failed"
+  },
+  "community": {
+    "title": "Community & Experts",
+    "subtitle": "Share, learn, connect",
+    "feed": "Feed",
+    "experts": "Experts",
+    "placeholder": "Share a tip, ask the community, show your harvest… 🌾",
+    "post": "Post",
+    "posting": "Posting…",
+    "posted": "Posted!",
+    "empty": "No posts yet. Be the first! 🌱",
+    "writeComment": "Write a comment…",
+    "yearsExp": "yrs exp"
+  },
+  "shops": {
+    "title": "Nearby Agri Shops",
+    "subtitle": "Find supplies close to your farm",
+    "callNow": "Call Now"
+  },
+  "advisor": {
+    "title": "AI Crop Advisor",
+    "subtitle": "Expert guidance for your farm, 24/7",
+    "clear": "Clear",
+    "ask": "Ask me anything about farming",
+    "intro": "Crop selection, fertilizer doses, pest control, irrigation — I've got you covered.",
+    "placeholder": "Ask about crops, pests, fertilizer…",
+    "thinking": "Thinking…",
+    "rateLimit": "Too many requests. Please wait.",
+    "credits": "AI credits exhausted. Please top up.",
+    "failed": "Advisor failed to respond.",
+    "connError": "Connection error",
+    "suggestions": [
+      "Best crops to sow this month in tropical climate?",
+      "My tomato leaves have yellow spots — what should I do?",
+      "How much NPK for 2 acres of wheat?",
+      "When should I irrigate after sowing rice?"
+    ]
+  },
+  "profile": {
+    "title": "Profile",
+    "farmDetails": "Farm Details",
+    "fullName": "Full Name",
+    "farmName": "Farm Name",
+    "location": "Location",
+    "saveChanges": "Save Changes",
+    "saving": "Saving…",
+    "avatarHint": "PNG/JPG · max 3MB",
+    "calculations": "Calculations",
+    "diagnoses": "Diagnoses",
+    "recentFert": "Recent Fertilizer Calcs",
+    "recentDiag": "Recent Diagnoses",
+    "noFert": "No calculations yet.",
+    "noDiag": "No diagnoses yet.",
+    "saved": "Profile saved",
+    "avatarUpdated": "Avatar updated",
+    "maxSize": "Max 3MB"
   }
 }

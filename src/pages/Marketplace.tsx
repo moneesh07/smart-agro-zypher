@@ -8,6 +8,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
 import { toast } from "sonner";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import PageShell from "@/components/PageShell";
 
 type Item = {
@@ -16,8 +17,10 @@ type Item = {
 };
 
 const CATEGORIES = ["All", "Seeds", "Fertilizers", "Tools"];
+const CAT_KEYS: Record<string, string> = { All: "all", Seeds: "seeds", Fertilizers: "fertilizers", Tools: "tools" };
 
 export default function Marketplace() {
+  const { t } = useTranslation();
   const { user } = useAuth();
   const navigate = useNavigate();
   const [items, setItems] = useState<Item[]>([]);
@@ -38,36 +41,31 @@ export default function Marketplace() {
     } else {
       await supabase.from("cart_items").insert({ user_id: user.id, item_id: item.id, quantity: 1 });
     }
-    toast.success(`${item.name} added to cart`);
+    toast.success(t("marketplace.addedToCart", { name: item.name }));
   };
 
   const filtered = cat === "All" ? items : items.filter(i => i.category === cat);
 
   return (
     <PageShell
-      title="Marketplace"
-      subtitle="Seeds, fertilizers & tools"
-      action={<Button variant="outline" size="sm" onClick={() => navigate("/cart")}><ShoppingCart className="w-4 h-4 mr-2" />Cart</Button>}
+      title={t("marketplace.title")}
+      subtitle={t("marketplace.subtitle")}
+      action={<Button variant="outline" size="sm" onClick={() => navigate("/cart")}><ShoppingCart className="w-4 h-4 mr-2" />{t("actions.cart")}</Button>}
     >
       <div className="flex gap-2 mb-5 overflow-x-auto pb-1">
         {CATEGORIES.map(c => (
           <Button key={c} size="sm" variant={cat === c ? "default" : "outline"} className={cat === c ? "glow-btn text-primary-foreground" : ""} onClick={() => setCat(c)}>
-            {c}
+            {t(`marketplace.${CAT_KEYS[c]}`)}
           </Button>
         ))}
       </div>
 
       {loading ? (
-        <p className="text-center text-muted-foreground py-10">Loading products…</p>
+        <p className="text-center text-muted-foreground py-10">{t("marketplace.loadingProducts")}</p>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {filtered.map((item, i) => (
-            <motion.div
-              key={item.id}
-              initial={{ opacity: 0, y: 12 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: i * 0.04 }}
-            >
+            <motion.div key={item.id} initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.04 }}>
               <Card className="glass border-0 overflow-hidden h-full flex flex-col hover:scale-[1.02] transition-transform">
                 <div className="aspect-[4/3] bg-muted overflow-hidden">
                   {item.image_url ? (
@@ -87,7 +85,7 @@ export default function Marketplace() {
                     </div>
                     <div className="flex gap-2">
                       <Button size="sm" className="flex-1 glow-btn text-primary-foreground" onClick={() => addToCart(item)}>
-                        <Plus className="w-4 h-4 mr-1" /> Add
+                        <Plus className="w-4 h-4 mr-1" /> {t("marketplace.add")}
                       </Button>
                       {item.phone && (
                         <Button size="sm" variant="outline" asChild>

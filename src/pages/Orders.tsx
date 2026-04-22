@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { Package, Clock, CheckCircle2, Truck, XCircle, ShoppingBag } from "lucide-react";
+import { Package, Clock, CheckCircle2, Truck, XCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -8,6 +8,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
+import { useTranslation } from "react-i18next";
 import PageShell from "@/components/PageShell";
 
 type OrderItem = { id: string; item_name: string; price: number; quantity: number; unit: string };
@@ -17,15 +18,16 @@ type Order = {
   order_items: OrderItem[];
 };
 
-const STATUS: Record<string, { icon: any; color: string; label: string }> = {
-  pending: { icon: Clock, color: "bg-amber-500/15 text-amber-600 border-amber-500/30", label: "Pending" },
-  confirmed: { icon: CheckCircle2, color: "bg-sky-500/15 text-sky-600 border-sky-500/30", label: "Confirmed" },
-  shipped: { icon: Truck, color: "bg-violet-500/15 text-violet-600 border-violet-500/30", label: "Shipped" },
-  delivered: { icon: CheckCircle2, color: "bg-emerald-500/15 text-emerald-600 border-emerald-500/30", label: "Delivered" },
-  cancelled: { icon: XCircle, color: "bg-rose-500/15 text-rose-600 border-rose-500/30", label: "Cancelled" },
+const STATUS: Record<string, { icon: any; color: string }> = {
+  pending: { icon: Clock, color: "bg-amber-500/15 text-amber-600 border-amber-500/30" },
+  confirmed: { icon: CheckCircle2, color: "bg-sky-500/15 text-sky-600 border-sky-500/30" },
+  shipped: { icon: Truck, color: "bg-violet-500/15 text-violet-600 border-violet-500/30" },
+  delivered: { icon: CheckCircle2, color: "bg-emerald-500/15 text-emerald-600 border-emerald-500/30" },
+  cancelled: { icon: XCircle, color: "bg-rose-500/15 text-rose-600 border-rose-500/30" },
 };
 
 export default function Orders() {
+  const { t } = useTranslation();
   const { user } = useAuth();
   const navigate = useNavigate();
   const [orders, setOrders] = useState<Order[]>([]);
@@ -54,20 +56,20 @@ export default function Orders() {
 
   const cancel = async (id: string) => {
     const { error } = await supabase.from("orders").update({ status: "cancelled" }).eq("id", id);
-    if (error) toast.error("Couldn't cancel order");
-    else toast.success("Order cancelled");
+    if (error) toast.error(t("orders.cancelFailed"));
+    else toast.success(t("orders.cancelled"));
   };
 
   return (
-    <PageShell title="Your Orders" subtitle={`${orders.length} order${orders.length === 1 ? "" : "s"}`}>
+    <PageShell title={t("orders.title")} subtitle={t("orders.count", { count: orders.length })}>
       {loading ? (
-        <p className="text-center text-muted-foreground py-10">Loading…</p>
+        <p className="text-center text-muted-foreground py-10">{t("common.loading")}</p>
       ) : orders.length === 0 ? (
         <Card className="glass border-0">
           <CardContent className="p-10 text-center">
             <Package className="w-12 h-12 mx-auto mb-3 text-muted-foreground opacity-50" />
-            <p className="text-muted-foreground mb-4">You haven't placed any orders yet</p>
-            <Button onClick={() => navigate("/marketplace")} className="glow-btn text-primary-foreground">Browse Marketplace</Button>
+            <p className="text-muted-foreground mb-4">{t("orders.empty")}</p>
+            <Button onClick={() => navigate("/marketplace")} className="glow-btn text-primary-foreground">{t("orders.browse")}</Button>
           </CardContent>
         </Card>
       ) : (
@@ -81,11 +83,11 @@ export default function Orders() {
                   <CardContent className="p-4">
                     <div className="flex items-start justify-between gap-3 mb-3">
                       <div>
-                        <p className="text-xs text-muted-foreground">Order #{o.id.slice(0, 8)}</p>
+                        <p className="text-xs text-muted-foreground">{t("orders.order")} #{o.id.slice(0, 8)}</p>
                         <p className="text-xs text-muted-foreground">{new Date(o.created_at).toLocaleString()}</p>
                       </div>
                       <Badge variant="outline" className={s.color}>
-                        <SIcon className="w-3 h-3 mr-1" /> {s.label}
+                        <SIcon className="w-3 h-3 mr-1" /> {t(`orders.status.${o.status}`)}
                       </Badge>
                     </div>
                     <div className="space-y-1 mb-3">
@@ -99,7 +101,7 @@ export default function Orders() {
                     <div className="flex items-center justify-between pt-3 border-t border-border">
                       <span className="font-bold text-lg text-primary">₹{Number(o.total).toFixed(0)}</span>
                       {o.status === "pending" && (
-                        <Button variant="outline" size="sm" onClick={() => cancel(o.id)}>Cancel</Button>
+                        <Button variant="outline" size="sm" onClick={() => cancel(o.id)}>{t("orders.cancel")}</Button>
                       )}
                     </div>
                   </CardContent>

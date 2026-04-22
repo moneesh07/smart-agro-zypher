@@ -6,6 +6,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import PageShell from "@/components/PageShell";
 import CheckoutDialog from "@/components/CheckoutDialog";
 
@@ -15,6 +16,7 @@ type Row = {
 };
 
 export default function Cart() {
+  const { t } = useTranslation();
   const { user } = useAuth();
   const navigate = useNavigate();
   const [rows, setRows] = useState<Row[]>([]);
@@ -46,26 +48,21 @@ export default function Cart() {
   const total = rows.reduce((s, r) => s + (r.marketplace_items?.price ?? 0) * r.quantity, 0);
 
   return (
-    <PageShell title="Your Cart" subtitle={`${rows.length} item${rows.length === 1 ? "" : "s"}`}>
+    <PageShell title={t("cart.title")} subtitle={t("cart.items", { count: rows.length })}>
       {loading ? (
-        <p className="text-center text-muted-foreground py-10">Loading…</p>
+        <p className="text-center text-muted-foreground py-10">{t("common.loading")}</p>
       ) : rows.length === 0 ? (
         <Card className="glass border-0">
           <CardContent className="p-10 text-center">
             <ShoppingBag className="w-12 h-12 mx-auto mb-3 text-muted-foreground opacity-50" />
-            <p className="text-muted-foreground mb-4">Your cart is empty</p>
-            <Button onClick={() => navigate("/marketplace")} className="glow-btn text-primary-foreground">Browse Marketplace</Button>
+            <p className="text-muted-foreground mb-4">{t("cart.empty")}</p>
+            <Button onClick={() => navigate("/marketplace")} className="glow-btn text-primary-foreground">{t("cart.browse")}</Button>
           </CardContent>
         </Card>
       ) : (
         <div className="space-y-3">
           {rows.map((r, i) => r.marketplace_items && (
-            <motion.div
-              key={r.id}
-              initial={{ opacity: 0, x: -10 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: i * 0.04 }}
-            >
+            <motion.div key={r.id} initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: i * 0.04 }}>
               <Card className="glass border-0">
                 <CardContent className="p-3 flex gap-3 items-center">
                   <div className="w-20 h-20 rounded-xl bg-muted overflow-hidden shrink-0">
@@ -100,14 +97,11 @@ export default function Cart() {
           <Card className="glass border-0 sticky bottom-4">
             <CardContent className="p-5 flex items-center justify-between gap-4">
               <div>
-                <p className="text-xs text-muted-foreground">Total</p>
+                <p className="text-xs text-muted-foreground">{t("cart.total")}</p>
                 <p className="text-3xl font-bold text-primary">₹{total.toFixed(0)}</p>
               </div>
-              <Button
-                className="glow-btn text-primary-foreground"
-                onClick={() => setCheckoutOpen(true)}
-              >
-                Checkout
+              <Button className="glow-btn text-primary-foreground" onClick={() => setCheckoutOpen(true)}>
+                {t("cart.checkout")}
               </Button>
             </CardContent>
           </Card>
